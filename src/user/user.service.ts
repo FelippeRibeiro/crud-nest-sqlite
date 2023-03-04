@@ -11,7 +11,25 @@ export class UserService {
     };
   }
 
-  async create(): Promise<Boolean> {
-    return true;
+  async create(dados: {
+    nome: string;
+    email: string;
+    idade: number;
+    telefone: string;
+  }): Promise<boolean> {
+    try {
+      await this.prisma.users.create({
+        data: {
+          nome: dados.nome,
+          email: dados.email,
+          idade: dados.idade,
+          telefone: dados.telefone,
+        },
+      });
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
 }
