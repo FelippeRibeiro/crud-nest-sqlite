@@ -5,9 +5,11 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
   constructor(private readonly userCrud: UserService) {}
-
+  timesPing = 1;
   @Get('/ping')
   ping(): string {
+    console.log('ping: ' + this.timesPing);
+    this.timesPing++;
     return 'pong';
   }
 
