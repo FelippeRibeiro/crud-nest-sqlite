@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// model telefone {
+//   id       Int    @id @default(autoincrement())
+//   telefone String
+//   usersId  Int?
+//   users    users? @relation(fields: [usersId], references: [id], onDelete: Cascade)
+
+//   @@index([usersId], map: "telefone_usersId_fkey")
+// }
+
+model users {
+  id       Int    @id @default(autoincrement())
+  nome     String
+  idade    Int
+  telefone String
+  email    String
+  senha    String
+}
