@@ -1,26 +1,42 @@
 import { Controller } from '@nestjs/common';
-import { Body, Get, Post, Query } from '@nestjs/common/decorators';
+import {
+  Body,
+  Get,
+  Post,
+  Param,
+  Patch,
+  Delete,
+} from '@nestjs/common/decorators';
 import { UserService } from './user.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userCrud: UserService) {}
-  timesPing = 1;
-  @Get('/ping')
-  ping(): string {
-    console.log('ping: ' + this.timesPing);
-    this.timesPing++;
-    return 'pong';
-  }
+  constructor(private readonly userService: UserService) {}
 
-  @Get('/getAll')
+  @Get()
   async getAll() {
-    return this.userCrud.getAll();
+    return this.userService.getAll();
   }
 
-  @Post('/insert')
-  async create(@Body() datas) {
-    console.log(datas);
-    return this.userCrud.create(datas);
+  @Get('/:id')
+  async getById(@Param('id') id: number) {
+    return this.userService.getById(id);
+  }
+
+  @Post()
+  async create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
+  }
+
+  @Patch('/:id')
+  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(id, updateUserDto);
+  }
+
+  @Delete('/:id')
+  async deleteById(@Param('id') id: number) {
+    return this.userService.deleteById(id);
   }
 }
