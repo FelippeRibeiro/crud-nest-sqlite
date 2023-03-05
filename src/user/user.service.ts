@@ -13,22 +13,39 @@ export class UserService {
   }
 
   async getById(id: number): Promise<object> {
-    const user = await this.prisma.users.findById(id);
+    const user = await this.prisma.users.findFirst({
+      where: { id: Number(id) },
+    });
     return user;
   }
 
   async create(createUserDto: CreateUserDto): Promise<object> {
-    const newUser = await this.prisma.create(createUserDto);
+    const newUser = await this.prisma.users.create({
+      data: {
+        nome: createUserDto.nome,
+        email: createUserDto.email,
+        idade: createUserDto.idade,
+        senha: createUserDto.senha,
+        telefone: createUserDto.telefone,
+      },
+    });
     return newUser;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<object> {
-    const updatedUser = await this.prisma.update(id, updateUserDto);
+    const updatedUser = await this.prisma.users.update({
+      where: { id: Number(id) },
+      data: {
+        ...updateUserDto,
+      },
+    });
     return updatedUser;
   }
 
-  async deleteById(id): Promise<object> {
-    const deletedUser = await this.prisma.delete(id);
+  async deleteById(id: number): Promise<object> {
+    const deletedUser = await this.prisma.users.delete({
+      where: { id: Number(id) },
+    });
     return deletedUser;
   }
 }
