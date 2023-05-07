@@ -8,12 +8,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
 @Module({
-  imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'client'),
-      exclude: ['/api*'],
-    }),
-  ],
+  imports: [],
   controllers: [AppController, UserController],
   providers: [AppService, UserService, PrismaClient],
 })

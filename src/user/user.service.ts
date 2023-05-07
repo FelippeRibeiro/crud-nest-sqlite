@@ -12,11 +12,11 @@ export class UserService {
     return userList;
   }
 
-  async getById(id: number): Promise<object> {
+  async getById(id: number): Promise<object | string> {
     const user = await this.prisma.users.findFirst({
       where: { id: Number(id) },
     });
-    return user;
+    return user || 'Usuario não encontrado';
   }
 
   async create(createUserDto: CreateUserDto): Promise<object> {
